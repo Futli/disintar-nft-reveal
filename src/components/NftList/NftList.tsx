@@ -46,12 +46,6 @@ const NftList = () => {
   };
 
   useEffect(() => {
-    setAddress(
-      Address.parseRaw(wallet?.account.address ?? "").toString({
-        bounceable: true,
-      })
-    );
-
     const fetchData = async () => {
       try {
         const { raw_account_states }: { raw_account_states: AccountState[] } =
@@ -70,10 +64,21 @@ const NftList = () => {
       setLoading(false);
     };
     setLoading(true);
-    if (wallet && address) {
+
+    if (wallet) {
+      const addressFriendly =
+        wallet?.account &&
+        Address.parseRaw(wallet.account.address).toString({
+          bounceable: true,
+        });
+      setAddress(addressFriendly ?? "");
+      console.log("addressFriendly", addressFriendly);
+    }
+
+    if (address) {
       fetchData();
     }
-  }, [wallet]);
+  }, [wallet, address]);
 
   const sendTx = (tx: any) => {
     tonConnectUi.sendTransaction(tx);
