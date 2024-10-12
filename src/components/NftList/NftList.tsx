@@ -54,36 +54,14 @@ const NftList = () => {
         setAddress(account_address);
         console.log(account_address);
 
-        const { raw_account_states }: { raw_account_states: AccountState[] } =
-          await request(
-            endpoint,
-            RawAccountStatesQuery(
-              "EQDahyr_gPkHBPbhyrvjoHGVFGGj8vXXtL7w14AV3S2JvpTF",
-              "EQBYrUVzn8Z7loRWDCIk81fM8iEkM0h2d2PFEol3O3ol6yLy"
-            )
-          );
-        if (raw_account_states) {
-          const nft_items = raw_account_states.map((raw_account_state) => {
-            const seller_address_friendly = addressToFriendlyBounceable(
-              raw_account_state.seller_wc,
-              raw_account_state.seller_address
-            );
-            const nft_address_friendly = addressToFriendlyBounceable(
-              raw_account_state.nft_workchain,
-              raw_account_state.nft_address
-            );
-            const price = fromNano(raw_account_state.parsed_seller_nft_price);
-            return {
-              seller_address_friendly,
-              nft_address_friendly,
-              seller_wc_raw: raw_account_state.seller_wc,
-              seller_address_raw: raw_account_state.seller_address,
-              price,
-            };
-          });
-          setData(nft_items);
-          setList(nft_items);
-        }
+        const data = await request(
+          endpoint,
+          RawAccountStatesQuery(
+            "EQDahyr_gPkHBPbhyrvjoHGVFGGj8vXXtL7w14AV3S2JvpTF",
+            "EQBYrUVzn8Z7loRWDCIk81fM8iEkM0h2d2PFEol3O3ol6yLy"
+          )
+        );
+        console.log(data);
       } catch (err: any) {
         setError(err.message);
       }
