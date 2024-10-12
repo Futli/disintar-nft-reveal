@@ -45,14 +45,19 @@ const NftList = () => {
   };
 
   useEffect(() => {
+    const { account_wc, account_address } = walletAddressToRaw(wallet?.account);
+
+    setAddress(addressToFriendlyBounceable(account_wc, account_address));
+
+    console.log(
+      addressToFriendlyBounceable(account_wc, account_address),
+      address,
+      account_wc,
+      account_address
+    );
+
     const fetchData = async () => {
       try {
-        const { account_wc, account_address, ...rest } = walletAddressToRaw(
-          wallet?.account
-        );
-
-        setAddress(addressToFriendlyBounceable(account_wc, account_address));
-
         const { raw_account_states }: { raw_account_states: AccountState[] } =
           await request(
             endpoint,
@@ -68,7 +73,6 @@ const NftList = () => {
       }
       setLoading(false);
     };
-    console.log(address);
     setLoading(true);
     if (wallet) {
       fetchData();
