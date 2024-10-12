@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { NftItem } from "../NftList/types";
+import { AccountState, NftItem } from "../NftList/types";
 
-function usePagination(data: NftItem [], itemsPerPage:number) {
+function usePagination(data: AccountState[], itemsPerPage: number) {
   const [currentPage, setCurrentPage] = useState(1);
   const maxPage = Math.ceil(data.length / itemsPerPage);
 
@@ -12,16 +12,16 @@ function usePagination(data: NftItem [], itemsPerPage:number) {
   }
 
   function next() {
-    setCurrentPage(currentPage => Math.min(currentPage + 1, maxPage));
+    setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
   }
 
   function prev() {
-    setCurrentPage(currentPage => Math.max(currentPage - 1, 1));
+    setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
   }
 
-  function jump(page : number) {
+  function jump(page: number) {
     const pageNumber = Math.max(1, page);
-    setCurrentPage(currentPage => Math.min(pageNumber, maxPage));
+    setCurrentPage((currentPage) => Math.min(pageNumber, maxPage));
   }
 
   return { next, prev, jump, currentData, currentPage, maxPage };

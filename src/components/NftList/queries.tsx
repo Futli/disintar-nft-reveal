@@ -9,8 +9,8 @@ const RawAccountStatesQuery = (
 ) => gql`
   query {
     raw_account_states(
-      parsed_nft_collection_address_address__friendly: ${collection_address}
-      parsed_nft_owner_address_address__friendly: ${owner_address}
+      parsed_nft_collection_address_address__friendly: "${collection_address}"
+      parsed_nft_owner_address_address__friendly: "${owner_address}"
     ) {
       address
       parsed_nft_content_offchain_url

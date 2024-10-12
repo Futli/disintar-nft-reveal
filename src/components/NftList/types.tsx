@@ -1,42 +1,27 @@
-import { Address } from "@ton/core"
+import { Address } from "@ton/core";
+
+export enum NftRevealMode {
+  ReadyToReveal = 1,
+  Pending = 2,
+  Opened = 3,
+}
 
 type AccountState = {
-    seller_wc: number,
-    seller_address: string,
-    nft_address: string,
-    nft_workchain: number,
-    parsed_seller_nft_price: string
-
-    
-}
+  address: string;
+  parsed_nft_content_offchain_url: string;
+  address__friendly: string;
+  parsed_nft_reveal_mode: NftRevealMode;
+};
 
 type NftItem = {
-    nft_address_friendly: string
-    price: string
-    seller_address_friendly: string
-    seller_address_raw: string
-    seller_wc_raw: number
-}
+  address: string;
+  parsed_nft_content_offchain_url: string;
+  address__friendly: string;
+  parsed_nft_reveal_mode: NftRevealMode;
+  thumbnail?: string;
+  name?: string;
+  image?: string;
+  error?: string;
+};
 
-
-type NftItem1 = {
-    seller_wc: number,
-    seller_address: string,
-    nft_address: string,
-    nft_workchain: number,
-    parsed_seller_nft_price: string
-
-    attributes: object
-    description: string
-    image: string
-    name:string
-    nft_address_friendly: string
-    price: string
-    seller_address_friendly: string
-    seller_wc_raw: number
-    seller_address_raw: string
-    error: string | undefined
-
-}
-
-export type {AccountState, NftItem}
+export type { AccountState, NftItem };

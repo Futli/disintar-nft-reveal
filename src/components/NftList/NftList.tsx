@@ -30,7 +30,7 @@ const NftList = () => {
   const [error, setError] = React.useState<string | undefined>();
   const [list, setList] = React.useState<any[]>([]);
   const [search, setSearch] = React.useState<string | undefined>();
-  const [address, setAddress] = React.useState<string | undefined>();
+  const [address, setAddress] = React.useState<string>("");
 
   let [page, setPage] = React.useState(1);
   const PER_PAGE = 10;
@@ -50,26 +50,27 @@ const NftList = () => {
         const { account_wc, account_address, ...rest } = walletAddressToRaw(
           wallet?.account
         );
-        console.log(account_wc, account_address, rest);
-        setAddress(account_address);
-        console.log(account_address);
 
-        const data = await request(
-          endpoint,
-          RawAccountStatesQuery(
-            "EQDahyr_gPkHBPbhyrvjoHGVFGGj8vXXtL7w14AV3S2JvpTF",
-            "EQBYrUVzn8Z7loRWDCIk81fM8iEkM0h2d2PFEol3O3ol6yLy"
-          )
-        );
-        console.log(data);
+        setAddress(addressToFriendlyBounceable(account_wc, account_address));
+
+        const { raw_account_states }: { raw_account_states: AccountState[] } =
+          await request(
+            endpoint,
+            RawAccountStatesQuery(
+              "EQDahyr_gPkHBPbhyrvjoHGVFGGj8vXXtL7w14AV3S2JvpTF",
+              address
+            )
+          );
+        setData(raw_account_states);
+        setList(raw_account_states);
       } catch (err: any) {
         setError(err.message);
       }
       setLoading(false);
     };
-
+    console.log(address);
     setLoading(true);
-    if (wallet) {
+    if (wallet && address) {
       fetchData();
     }
   }, [wallet]);
@@ -82,7 +83,7 @@ const NftList = () => {
     const searchTerm = e.target.value.toLowerCase();
     setSearch(searchTerm);
     const filteredData = data?.filter((item) =>
-      item?.nft_address_friendly.toLowerCase().includes(searchTerm)
+      item?.address__friendly.toLowerCase().includes(searchTerm)
     );
     setList(filteredData);
   };
