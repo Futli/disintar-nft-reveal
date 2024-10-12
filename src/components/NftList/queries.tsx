@@ -1,26 +1,24 @@
+import { AccountState, Address } from "@ton/core";
+import { gql } from "graphql-request";
 
-import { AccountState, Address } from '@ton/core'
-import { gql } from 'graphql-request'
+const endpoint = "https://dton.io/graphql/";
 
-const endpoint = 'https://dton.io/graphql/'
-
-const RawAccountStatesQuery = (wc: number, addr:string) =>gql`query
-    {
-        raw_account_states(
-          parsed_seller_nft_prev_owner_address_workchain: ${wc}
-          parsed_seller_nft_prev_owner_address_address: "${addr}"
-          parsed_seller_is_closed: 0
-          order_by: "parsed_seller_nft_price"
-          order_desc: true
-        ) {
-          seller_wc: workchain
-          seller_address: address
-          nft_address: parsed_seller_nft_address_address
-          nft_workchain: parsed_seller_nft_address_workchain
-          parsed_seller_nft_price
-        }
-      }
-`
+const RawAccountStatesQuery = (
+  collection_address: string,
+  owner_address: string
+) => gql`
+  query {
+    raw_account_states(
+      parsed_nft_collection_address_address__friendly: ${collection_address}
+      parsed_nft_owner_address_address__friendly: ${owner_address}
+    ) {
+      address
+      parsed_nft_content_offchain_url
+      address__friendly
+      parsed_nft_reveal_mode
+    }
+  }
+`;
 
 const CheckIsDisintarQuery = (wc: number, adress: string) => gql`query {
     raw_transactions(
@@ -32,6 +30,6 @@ const CheckIsDisintarQuery = (wc: number, adress: string) => gql`query {
     ){
       gen_utime
     }
-  }`
+  }`;
 
-export {RawAccountStatesQuery, CheckIsDisintarQuery, endpoint}
+export { RawAccountStatesQuery, CheckIsDisintarQuery, endpoint };

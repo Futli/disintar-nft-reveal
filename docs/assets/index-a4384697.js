@@ -90167,7 +90167,7 @@ const Rre = () => {
 function Ire() {
   return Fe(dz, {
     manifestUrl:
-      "https://disintar.github.io/disintar-nft-reveal/tonconnect-manifest.json",
+      "https://github.com/Futli/disintar-nft-reveal/tonconnect-manifest.json",
     uiPreferences: { theme: Mr.DARK },
     walletsListConfiguration: {
       includeWallets: [
