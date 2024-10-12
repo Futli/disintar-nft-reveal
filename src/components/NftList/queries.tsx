@@ -1,4 +1,3 @@
-import { AccountState, Address } from "@ton/core";
 import { gql } from "graphql-request";
 
 const endpoint = "https://dton.io/graphql/";

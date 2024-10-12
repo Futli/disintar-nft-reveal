@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { request } from "graphql-request";
 import { RawAccountStatesQuery, endpoint } from "./queries";
-import { AccountState, NftItem } from "./types";
+import { AccountState } from "./types";
 import "./styles.scss";
 import { NftItemComponent } from "../NftItem";
 import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
-import { Address, fromNano } from "@ton/core";
+import { Address } from "@ton/core";
 
 import {
   CircularProgress,
@@ -15,7 +15,6 @@ import {
   Alert,
   Pagination,
 } from "@mui/material";
-import { addressToFriendlyBounceable, walletAddressToRaw } from "./helpers";
 
 import usePagination from "../hooks/usePagination";
 
@@ -67,7 +66,7 @@ const NftList = () => {
       const addressFriendly =
         wallet?.account &&
         Address.parseRaw(wallet.account.address).toString({
-          bounceable: true,
+          bounceable: false,
         });
       setAddress(addressFriendly ?? "");
     }
@@ -109,15 +108,15 @@ const NftList = () => {
         variant="filled"
         sx={{ mb: 4 }}
       />
+      {address && (
+        <Alert sx={{ mb: 2 }} severity="success">
+          Connected to {address}
+        </Alert>
+      )}
       {error && <Alert severity="error">{error}</Alert>}
       {!loading && !data?.length && (
         <Alert sx={{ mb: 2 }} severity="info">
           No NFTs found
-        </Alert>
-      )}
-      {address && (
-        <Alert sx={{ mb: 2 }} severity="success">
-          Connected to {address}
         </Alert>
       )}
       <Grid
