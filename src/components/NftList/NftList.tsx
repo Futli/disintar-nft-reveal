@@ -5,7 +5,7 @@ import { AccountState, NftItem } from "./types";
 import "./styles.scss";
 import { NftItemComponent } from "../NftItem";
 import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
-import { fromNano } from "@ton/core";
+import { Address, fromNano } from "@ton/core";
 
 import {
   CircularProgress,
@@ -46,15 +46,10 @@ const NftList = () => {
   };
 
   useEffect(() => {
-    const { account_wc, account_address } = walletAddressToRaw(wallet?.account);
-
-    setAddress(addressToFriendlyBounceable(account_wc, account_address));
-
-    console.log(
-      addressToFriendlyBounceable(account_wc, account_address),
-      address,
-      account_wc,
-      account_address
+    setAddress(
+      Address.parseRaw(wallet?.account.address ?? "").toString({
+        bounceable: true,
+      })
     );
 
     const fetchData = async () => {
@@ -75,7 +70,7 @@ const NftList = () => {
       setLoading(false);
     };
     setLoading(true);
-    if (wallet) {
+    if (wallet && address) {
       fetchData();
     }
   }, [wallet]);
