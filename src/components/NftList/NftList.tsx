@@ -21,8 +21,6 @@ import usePagination from "../hooks/usePagination";
 
 const NftList = () => {
   const wallet = useTonWallet();
-  console.log(wallet, wallet?.account);
-  //const wallet = { account: { account_wc: "", account_address: "" } };
 
   const [tonConnectUi] = useTonConnectUI();
 
@@ -72,7 +70,6 @@ const NftList = () => {
           bounceable: true,
         });
       setAddress(addressFriendly ?? "");
-      console.log("addressFriendly", addressFriendly);
     }
 
     if (address) {
