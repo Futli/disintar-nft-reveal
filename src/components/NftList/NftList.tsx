@@ -70,7 +70,7 @@ const NftList = () => {
     };
     console.log(address);
     setLoading(true);
-    if (wallet && address) {
+    if (wallet) {
       fetchData();
     }
   }, [wallet]);
