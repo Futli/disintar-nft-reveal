@@ -21,6 +21,7 @@ import usePagination from "../hooks/usePagination";
 
 const NftList = () => {
   const wallet = useTonWallet();
+  console.log(wallet, wallet?.account);
   //const wallet = { account: { account_wc: "", account_address: "" } };
 
   const [tonConnectUi] = useTonConnectUI();
