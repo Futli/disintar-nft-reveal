@@ -47,10 +47,10 @@ const NftList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { account_wc, account_address } = walletAddressToRaw(
+        const { account_wc, account_address, ...rest } = walletAddressToRaw(
           wallet?.account
         );
-
+        console.log(account_wc, account_address, rest);
         setAddress(account_address);
         console.log(account_address);
 
