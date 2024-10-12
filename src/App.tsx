@@ -4,20 +4,12 @@ import { Header } from "./components/Header/Header";
 import { NftList } from "./components/NftList";
 
 function App() {
-  console.log(
-    import.meta.env.MODE,
-    "prod",
-    import.meta.env.PROD,
-    "dev",
-    import.meta.env.DEV
-  );
-
   return (
     <TonConnectUIProvider
       manifestUrl={
-        import.meta.env.MODE === "production"
+        import.meta.env.PROD
           ? "https://futli.github.io/disintar-nft-reveal/tonconnect-manifest.json"
-          : "https://github.com/Futli/disintar-nft-reveal/blob/main/public/tonconnect-manifest.json"
+          : "https://github.com/Futli/disintar-nft-reveal/blob/main/tonconnect-manifest.json"
       }
       uiPreferences={{ theme: THEME.DARK }}
       walletsListConfiguration={{
